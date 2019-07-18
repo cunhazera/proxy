@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.UnknownHostException;
 
 @RestController
 @RequestMapping
@@ -20,7 +19,7 @@ public class ShortenerRest {
     private ShortenerService service;
 
     @GetMapping(value = "short", produces = "application/json")
-    public ResponseEntity shortURL(@RequestParam("url") String url) throws UnknownHostException {
+    public ResponseEntity shortURL(@RequestParam("url") String url) {
         URLEntity urlEntity = service.shortURL(url);
         return new ResponseEntity(new RestVO(urlEntity.getNewUrl(), urlEntity.getExpirationDate().getTime()), HttpStatus.OK);
     }

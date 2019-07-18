@@ -13,8 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
@@ -35,7 +33,7 @@ public class ShortenerService {
     private static final int MIN = 5;
 
     @Transactional(propagation = Propagation.REQUIRED)
-    public URLEntity shortURL(String url) throws UnknownHostException {
+    public URLEntity shortURL(String url) {
         int[] array = {2, 3, 4};
         int pos = new Random().nextInt(array.length);
         int randomValue = array[pos];
@@ -52,7 +50,7 @@ public class ShortenerService {
         String shortedCode = RandomStringUtils.randomAlphabetic(MIN, max);
         URLEntity urlEntity = new URLEntity(new Date(), url);
         urlEntity.setShorted(shortedCode);
-        urlEntity.setNewUrl(String.format("http://%s:%s/%s", InetAddress.getLocalHost().getHostAddress(), serverPort, shortedCode));
+        urlEntity.setNewUrl(String.format("http://%s:%s/%s", System.getenv("INSTANCE_IP"), serverPort, shortedCode));
         urlEntity.setExpirationDate(addOneYearToDate(urlEntity.getCreationDate()));
         return repository.save(urlEntity);
     }
