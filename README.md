@@ -1,6 +1,12 @@
 # proxy
 ![Build Status](https://travis-ci.org/cunhazera/proxy.svg?branch=master)
 
+# Live Demo
+- This app is running here: `http://13.59.118.201:8080`
+- POST `http://13.59.118.201:8080/short` with URL in body as param to create a shorted code.
+- GET `http://13.59.118.201:8080/{code}` to redirect to the original URL.
+
+
 # What must be done to run this project locally
  - Define an env var called `INSTANCE_IP` with the IP from the local computer
    - There are some commands that you can use to find out your local IP address:
