@@ -28,3 +28,6 @@
 ```
   - Try to use some http client to perform the POST request. If you paste a complex URL in terminal, your text will be corrupted (some chars will be replaced in terminal) and your redirect will fail.
   - Access `http://your-ip-here/RANDOM_GENERATED_TEXT` and you will be redirect to the recorded URL.
+
+# And what about the database?
+This app uses a database in memory :)
