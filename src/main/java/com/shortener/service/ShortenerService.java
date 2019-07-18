@@ -44,7 +44,7 @@ public class ShortenerService {
         if (MIN > max) {
             max += MIN;
         }
-        String shortedCode = RandomStringUtils.randomAlphabetic(MIN, max);
+        String shortedCode = RandomStringUtils.randomAlphanumeric(MIN, max);
         URLEntity urlEntity = new URLEntity(new Date(), url);
         urlEntity.setShorted(shortedCode);
         urlEntity.setNewUrl(String.format("http://%s:%s/%s", System.getenv("INSTANCE_IP"), serverPort, shortedCode));
