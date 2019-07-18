@@ -1,0 +1,9 @@
+version: '3.3'
+services: 
+  app:
+    restart: always
+    image: cunhazera/senior-app:latest
+    environment:
+      - INSTANCE_IP=${INSTANCE_IP}
+    ports:
+      - 8080:8080
