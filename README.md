@@ -15,7 +15,7 @@
    - Or you can use `docker build` to build your own image from the Dockerfile
 
 # How to test it
-  - Send a `POST` request to `/short`, with the URL in the body of the request. It will return something like this:
+  - Send a `POST` request to `http://your-ip-here:8080/short`, with the URL in the body of the request. It will return something like this:
 ```
 {
 "newUrl": "http://your-ip-here:8080/RANDOM_GENERATED_TEXT",
