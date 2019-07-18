@@ -1,4 +1,5 @@
 # proxy
+![Build Status](https://travis-ci.org/cunhazera/proxy.svg?branch=master)
 
 # What must be done to run this project locally
  - Clone the project
