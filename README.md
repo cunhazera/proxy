@@ -13,3 +13,14 @@
    - `java -jar target/app-0.0.1-SNAPSHOT.jar`
    - `docker-compose up`
    - Or you can use `docker build` to build your own image from the Dockerfile
+
+# How to test it
+  - Send a `POST` request to `/short`, with the URL in the body of the request. It will return something like this:
+```
+{
+"newUrl": "http://your-ip-here:8080/RANDOM_GENERATED_TEXT",
+"expiresAt": 1595040333922
+}
+```
+  - Try to use some http client to perform the POST request. If you paste a complex URL in terminal, your text will be corrupted (some chars will be replaced in terminal) and your redirect will fail.
+  - Access `http://your-ip-here/RANDOM_GENERATED_TEXT` and you will be redirect to the recorded URL.
