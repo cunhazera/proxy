@@ -9,6 +9,6 @@
      - `hostname -I | awk '{print $1}'`
      - `ip route get 8.8.8.8 | sed -n '/src/{s/.*src *\([^ ]*\).*/\1/p;q}'`
  - Run:
-   - java -jar target/app-0.0.1-SNAPSHOT.jar
-   - docker-compose up
+   - `java -jar target/app-0.0.1-SNAPSHOT.jar`
+   - `docker-compose up`
    - Or you can use `docker build` to build your own image from the Dockerfile
