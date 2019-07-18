@@ -49,7 +49,7 @@ public class ShortenerRestIT {
 
     @Test
     public void shortURL() throws Exception {
-        RequestBuilder requestBuilder = buildGetRequest(URL_TEST);
+        RequestBuilder requestBuilder = buildPostRequest(URL_TEST);
         MockHttpServletResponse response = mockMvc.perform(requestBuilder).andReturn().getResponse();
         RestVO shortedResult = new ObjectMapper().readValue(response.getContentAsString(), RestVO.class);
         LocalDate nextYear = oneYearLater(new Date()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -99,7 +99,7 @@ public class ShortenerRestIT {
         assertThat(response.getStatus(), equalTo(HttpStatus.NOT_FOUND.value()));
     }
 
-    private MockHttpServletRequestBuilder buildGetRequest(String url) {
+    private MockHttpServletRequestBuilder buildPostRequest(String url) {
         return MockMvcRequestBuilders
                 .post("/short")
                 .content(url)
