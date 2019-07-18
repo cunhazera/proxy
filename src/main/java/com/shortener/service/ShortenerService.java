@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.view.RedirectView;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
@@ -23,9 +23,6 @@ public class ShortenerService {
 
     @Value("${server.port}")
     private String serverPort;
-
-    @Autowired
-    private ShortenerService service;
 
     @Autowired
     private ShortenerRepository repository;
@@ -56,7 +53,7 @@ public class ShortenerService {
     }
 
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
-    public void redirect(String shorted, HttpServletResponse response) throws IOException {
+    public RedirectView redirect(String shorted) throws IOException {
         URLEntity urlEntity = repository.findByShorted(shorted);
 
         Optional.ofNullable(urlEntity).orElseThrow(() -> new ShortedURLNotFoundException(shorted));
@@ -66,7 +63,7 @@ public class ShortenerService {
             throw new ExpiredCodeException(shorted);
         }
 
-        response.sendRedirect(urlEntity.getUrl());
+        return new RedirectView(urlEntity.getUrl());
     }
 
     private Date addOneYearToDate(Date creationDate) {

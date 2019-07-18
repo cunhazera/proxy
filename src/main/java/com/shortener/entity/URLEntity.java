@@ -15,7 +15,7 @@ public class URLEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate = new Date();
 
-    @Column(name = "url")
+    @Column(name = "url", length = 500)
     private String url;
 
     @Column(name = "shorted_code", unique = true)

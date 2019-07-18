@@ -1,32 +1,53 @@
 package com.shortener.service;
 
-import org.apache.commons.lang3.RandomStringUtils;
+import com.shortener.entity.URLEntity;
+import com.shortener.exception.ExpiredCodeException;
+import com.shortener.exception.ShortedURLNotFoundException;
+import com.shortener.repository.ShortenerRepository;
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Random;
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 
 public class ShortenerServiceTest {
 
-    @Test
-    public void test() {
-        String url = "https://";
-        int[] array = {2, 3, 4};
-        int pos = new Random().nextInt(array.length);
-        int randomValue = array[pos];
-        int min = 5;
-        int max = 32;
-        if (url.length() < 32) {
-            max = url.length();
-        }
-        if (max >= url.length() / 2) {
-            max /= randomValue;
-        }
-        if (min > max) {
-            max += min;
-        }
-        String generated = RandomStringUtils.randomAlphabetic(min, max);
-        System.out.println(generated);
+    @InjectMocks
+    private ShortenerService service;
+
+    @Mock
+    private ShortenerRepository repository;
+
+    @Before
+    public void init() {
+        MockitoAnnotations.initMocks(this);
+    }
+
+    @Test(expected = ShortedURLNotFoundException.class)
+    public void testShortedCodeNotFoundThrowsException() throws IOException {
+        String code = "code";
+        Mockito.when(repository.findByShorted(code)).thenReturn(null);
+        service.redirect(code);
+    }
+
+    @Test(expected = ExpiredCodeException.class)
+    public void testExpiredCodeThrowsException() throws IOException {
+        URLEntity entity = new URLEntity();
+        entity.setExpirationDate(lastYear(new Date()));
+        Mockito.when(repository.findByShorted(entity.getShorted())).thenReturn(entity);
+        service.redirect(entity.getShorted());
+    }
+
+    private Date lastYear(Date creationDate) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(creationDate);
+        cal.add(Calendar.YEAR, -1);
+        return cal.getTime();
     }
 
 }

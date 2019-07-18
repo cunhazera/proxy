@@ -101,7 +101,8 @@ public class ShortenerRestIT {
 
     private MockHttpServletRequestBuilder buildGetRequest(String url) {
         return MockMvcRequestBuilders
-                .get("/short?url=" + url)
+                .post("/short")
+                .content(url)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
     }
